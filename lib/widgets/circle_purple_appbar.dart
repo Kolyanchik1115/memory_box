@@ -25,9 +25,9 @@ class PurpleAppBar extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(title!, style: AppTextStyles.title),
+            Text(title ?? '', style: AppTextStyles.title),
             Text(
-              subtitle!,
+              subtitle ?? '',
               style: AppTextStyles.subtitle,
             ),
           ],

@@ -14,3 +14,19 @@ class AuthSmsEvent extends AuthEvent {
 
   AuthSmsEvent({required this.smsCode});
 }
+
+class GetUserNameEvent extends AuthEvent {
+  final String userName;
+  GetUserNameEvent({
+    required this.userName,
+  });
+}
+
+class UpdatePhoneEvent extends AuthEvent {
+  final String phoneNumber;
+  UpdatePhoneEvent({required this.phoneNumber});
+}
+
+class UserAvatarEvent extends AuthEvent {}
+
+class UserInfoSaveEvent extends AuthEvent {}

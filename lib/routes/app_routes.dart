@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:memory_box/pages/home_page/home_page.dart';
 import 'package:memory_box/pages/main_page.dart';
+import 'package:memory_box/pages/profile_pages/profile_edit_page/profile_edit_page.dart';
+import 'package:memory_box/pages/profile_pages/profile_page/profile_page.dart';
+import 'package:memory_box/pages/recorder_pages/record_page.dart';
 import 'package:memory_box/pages/registration_pages/hello_new_user.dart';
 import 'package:memory_box/pages/registration_pages/phone_registration_page.dart';
 import 'package:memory_box/pages/registration_pages/sms_registration_page.dart';
@@ -29,7 +32,16 @@ class AppRouter {
       case MainPage.routeName:
         builder = (_) => MainPage();
         break;
+      case ProfilePage.routeName:
+        builder = (_) => const ProfilePage();
+        break;
+      case RecordPage.routeName:
+        builder = (_) => const RecordPage();
+        break;
 
+      case ProfileEditPage.routeName:
+        builder = (_) => ProfileEditPage();
+        break;
       case PhoneRegistrationPage.routeName:
         builder = (_) => const PhoneRegistrationPage();
         break;
