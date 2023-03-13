@@ -29,6 +29,25 @@ bool checkName() {
   return FirebaseAuth.instance.currentUser?.displayName == null;
 }
 
+String allAudioTime(totalDurationFromAudioModel) {
+  final seconds = totalDurationFromAudioModel.fold(0, (value, element) {
+    final singleTime = element.split(':');
+    return value +
+        (int.parse(singleTime.first) * 60) +
+        int.parse(singleTime.last);
+  });
+  final int h = seconds ~/ 3600, m = ((seconds - h * 3600)) ~/ 60;
+  final hourLeft = h.toString().length < 2 ? "0$h" : h.toString();
+
+  final minuteLeft =
+      m.toString().length < 2 ? "0$m" : m.toString();
+  if (h == 0) {
+    return '$hourLeft:$minuteLeft минут';
+  } else {
+    return '$hourLeft:$minuteLeft часов';
+  }
+}
+
 class TimerFormat {
   String format(Duration duration, {bool recorder = false}) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -42,6 +61,13 @@ class TimerFormat {
       twoDigitSeconds,
     ].join(':');
   }
+}
+
+class AudioId {
+  static String? audioId;
+  static String? collectionId;
+  static int? audioInSeconds;
+  static List audioIdList = [];
 }
 
 String generateRandomString() {

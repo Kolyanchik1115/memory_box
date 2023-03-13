@@ -7,7 +7,7 @@ class NavigationState {
   final int currentIndex;
   final String route;
 
-  NavigationState({
+  const NavigationState({
     this.status = NavigationStatus.initial,
     this.currentIndex = 0,
     this.route = HomePage.routeName,

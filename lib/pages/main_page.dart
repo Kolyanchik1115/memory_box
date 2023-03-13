@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:memory_box/blocs/audio_list/audio_list_bloc.dart';
 import 'package:memory_box/blocs/navigation/navigation_bloc.dart';
+import 'package:memory_box/blocs/player/player_bloc.dart';
+import 'package:memory_box/pages/audio_recording_page/audio_recording_page.dart';
+import 'package:memory_box/pages/deleted_page/deleted_page.dart';
+import 'package:memory_box/pages/deleted_page/select_to_delete_page.dart';
 import 'package:memory_box/pages/home_page/home_page.dart';
 import 'package:memory_box/pages/profile_pages/profile_page/profile_page.dart';
 import 'package:memory_box/pages/recorder_pages/record_page.dart';
@@ -22,16 +27,15 @@ class MainPage extends StatelessWidget {
   static const List<String> _pages = [
     HomePage.routeName,
     // CollectionPage.routeName,
-    // RecordPage.routeName,
-    // AudioRecordingsPage.routeName,
+
     ProfilePage.routeName,
     RecordPage.routeName,
+    AudioRecordingsPage.routeName,
+    DeletedPage.routeName,
+    SelectToDeletePage.routeName,
 
     // SearchPage.routeName,
-    // DeletedPage.routeName,
     // SubscribePage.routeName,
-    // SelectToDeletePage.routeName,
-    // DeletedPage.routeName,
   ];
 
   void _onSelectTab(String route) {
@@ -57,12 +61,12 @@ class MainPage extends StatelessWidget {
     _key.currentState?.openDrawer();
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(
-        //   create: (context) => AudioListBloc()
-        //     ..add(
-        //       AudioListInitialEvent(),
-        //     ),
-        // ),
+        BlocProvider(
+          create: (context) => AudioListBloc()
+            ..add(
+              AudioListInitialEvent(),
+            ),
+        ),
 
         BlocProvider(
           create: (context) => NavigationBloc(),
@@ -70,9 +74,9 @@ class MainPage extends StatelessWidget {
         // BlocProvider(
         //   create: (context) => CollectionBloc()..add(InitCollectionCardEvent()),
         // ),
-        // BlocProvider(
-        //   create: (context) => PlayerBloc()..add(const PlayerInitEvent()),
-        // ),
+        BlocProvider(
+          create: (context) => PlayerBloc()..add(PlayerInitEvent()),
+        ),
         // BlocProvider(
         //   create: (context) =>
         //       CreateCollectionBloc()..add(CollectionInitialEvent()),
@@ -100,9 +104,9 @@ class MainPage extends StatelessWidget {
                 ? CustomBNBar(
                     onSelect: (index) {
                       if (state.currentIndex != index) {
-                        // context
-                        //     .read<AudioListBloc>()
-                        //     .add(AudioListInitialEvent());
+                        context
+                            .read<AudioListBloc>()
+                            .add(AudioListInitialEvent());
                         context.read<NavigationBloc>().add(
                               NavigateTab(
                                 tabIndex: index,
@@ -115,9 +119,9 @@ class MainPage extends StatelessWidget {
                   )
                 : DeletedBottomBar(
                     onDelete: () {
-                      // context
-                      //     .read<AudioListBloc>()
-                      //     .add(AudioListRemoveSelectedEvent());
+                      context
+                          .read<AudioListBloc>()
+                          .add(AudioListRemoveSelectedEvent());
                       context.read<NavigationBloc>().add(
                             NavigateMenu(
                               menuIndex: 9,
@@ -126,9 +130,9 @@ class MainPage extends StatelessWidget {
                           );
                     },
                     onRestore: () {
-                      // context
-                      //     .read<AudioListBloc>()
-                      //     .add(AudioListRestoreSelectedEvent());
+                      context
+                          .read<AudioListBloc>()
+                          .add(AudioListRestoreSelectedEvent());
                       context.read<NavigationBloc>().add(
                             NavigateMenu(
                               menuIndex: 9,

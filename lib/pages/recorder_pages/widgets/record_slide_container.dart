@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:memory_box/blocs/player/player_bloc.dart';
 import 'package:memory_box/blocs/record/record_bloc.dart';
 
 import 'package:memory_box/pages/recorder_pages/widgets/animated_rec_widget.dart';
 import 'package:memory_box/pages/recorder_pages/widgets/record_painter_widget.dart';
+import 'package:memory_box/pages/save_record_page/save_record_page.dart';
 import 'package:memory_box/resources/app_colors.dart';
 import 'package:memory_box/resources/app_icons.dart';
 import 'package:memory_box/resources/app_text_styles.dart';
@@ -43,26 +45,26 @@ class _RecordSlideContainerState extends State<RecordSlideContainer> {
       create: (context) => RecordBloc(),
       child: BlocConsumer<RecordBloc, RecordState>(
         listener: (context, state) {
-          // Future.delayed(
-          //   const Duration(milliseconds: 200),
-          //   () async {
-          //     if (state.status == RecorderStatus.finish) {
-          //       context.read<PlayerBloc>().add(GetModelFromFirebase(
-          //             state.uuid,
-          //           ));
-          //       Navigator.pushNamedAndRemoveUntil(
-          //         context,
-          //         SaveRecordPage.routeName,
-          //         arguments: state.uuid,
-          //         (route) => false,
-          //       );
-          //       // Navigator.of(context).pushNamedAndRemoveUntil(
-          //       //   SaveRecordPage.routeName,
-          //       //   arguments: state.uuid,
-          //       // );
-          //     }
-          //   },
-          // );
+          Future.delayed(
+            const Duration(milliseconds: 200),
+            () async {
+              if (state.status == RecorderStatus.finish) {
+                context.read<PlayerBloc>().add(GetModelFromFirebase(
+                      state.uuid,
+                    ));
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  SaveRecordPage.routeName,
+                  arguments: state.uuid,
+                  (route) => false,
+                );
+                // Navigator.of(context).pushNamedAndRemoveUntil(
+                //   SaveRecordPage.routeName,
+                //   arguments: state.uuid,
+                // );
+              }
+            },
+          );
         },
         builder: (context, state) {
           counter = 0;

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:memory_box/pages/audio_recording_page/audio_recording_page.dart';
+import 'package:memory_box/pages/deleted_page/deleted_page.dart';
 import 'package:memory_box/pages/home_page/home_page.dart';
 import 'package:memory_box/pages/main_page.dart';
 import 'package:memory_box/pages/profile_pages/profile_edit_page/profile_edit_page.dart';
@@ -10,12 +12,15 @@ import 'package:memory_box/pages/registration_pages/phone_registration_page.dart
 import 'package:memory_box/pages/registration_pages/sms_registration_page.dart';
 import 'package:memory_box/pages/registration_pages/splash_authorization_page.dart';
 import 'package:memory_box/pages/registration_pages/splash_registation_page.dart';
+import 'package:memory_box/pages/save_record_page/save_record_page.dart';
+import 'package:memory_box/pages/save_to_collection_page/save_to_collection_page.dart';
 import 'package:memory_box/pages/splash_page/splash_page.dart';
 
 class AppRouter {
   const AppRouter._();
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final arguments = settings.arguments;
     WidgetBuilder builder;
     if (kDebugMode) {
       print(settings.name);
@@ -38,6 +43,15 @@ class AppRouter {
       case RecordPage.routeName:
         builder = (_) => const RecordPage();
         break;
+      case SaveRecordPage.routeName:
+        builder = (_) => SaveRecordPage(uuid: arguments as String);
+        break;
+      case SaveToCollectionPage.routeName:
+        builder = (_) => SaveToCollectionPage(uuid: arguments as String);
+        break;
+      case DeletedPage.routeName:
+        builder = (_) => const DeletedPage();
+        break;
 
       case ProfileEditPage.routeName:
         builder = (_) => ProfileEditPage();
@@ -53,6 +67,9 @@ class AppRouter {
         break;
       case SplashRegistrationPage.routeName:
         builder = (_) => const SplashRegistrationPage();
+        break;
+      case AudioRecordingsPage.routeName:
+        builder = (_) => const AudioRecordingsPage();
         break;
 
       case SplashScreen.routeName:
