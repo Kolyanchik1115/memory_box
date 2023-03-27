@@ -9,6 +9,7 @@ import 'package:memory_box/pages/deleted_page/select_to_delete_page.dart';
 import 'package:memory_box/pages/home_page/home_page.dart';
 import 'package:memory_box/pages/profile_pages/profile_page/profile_page.dart';
 import 'package:memory_box/pages/recorder_pages/record_page.dart';
+import 'package:memory_box/pages/search_page/search_page.dart';
 
 import 'package:memory_box/routes/app_routes.dart';
 import 'package:memory_box/utils/helpers.dart';
@@ -27,14 +28,12 @@ class MainPage extends StatelessWidget {
   static const List<String> _pages = [
     HomePage.routeName,
     // CollectionPage.routeName,
-
     ProfilePage.routeName,
     RecordPage.routeName,
     AudioRecordingsPage.routeName,
     DeletedPage.routeName,
     SelectToDeletePage.routeName,
-
-    // SearchPage.routeName,
+    SearchPage.routeName,
     // SubscribePage.routeName,
   ];
 

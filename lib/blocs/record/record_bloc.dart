@@ -22,9 +22,10 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
     });
 
     on<RecordStartedEvent>((event, emit) async {
-      final timerFormat = TimerFormat();
       String timer = '00:00:00';
       List<double> noiseValues = [];
+      final timerFormat = TimerFormat();
+      // int? timeMinutes;
 
       await _recordRepository.record();
 
@@ -32,6 +33,7 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
         double? decibels = value.decibels;
         timer = timerFormat.format(value.duration, recorder: true);
         _recordRepository.timerAudio = timerFormat.format(value.duration);
+        // timeMinutes = value.duration.inMinutes;
         _recordRepository.recordDurationSeconds = value.duration.inSeconds;
         if (decibels! > 25) {
           noiseValues.add((decibels - 25) * 2);

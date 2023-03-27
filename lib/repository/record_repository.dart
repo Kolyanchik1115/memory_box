@@ -8,7 +8,7 @@ import 'package:memory_box/utils/helpers.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RecordRepository {
-  late final String timerAudio;
+  String timerAudio = '';
 
   bool _isRecorderReady = false;
   int? recordDurationSeconds;

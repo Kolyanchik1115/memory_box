@@ -2,8 +2,10 @@
 
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:memory_box/models/audio_model.dart';
 import 'package:memory_box/pages/splash_page/splash_page.dart';
 import 'package:memory_box/resources/app_colors.dart';
 import 'package:memory_box/resources/app_text_styles.dart';
@@ -29,6 +31,19 @@ bool checkName() {
   return FirebaseAuth.instance.currentUser?.displayName == null;
 }
 
+Future<List<AudioModel>> getListAudioHelper() async {
+  final sort = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('audioList')
+      .orderBy('titleOfAudio', descending: false);
+  final QuerySnapshot querySnapshot = await sort.get();
+  final listAudio = querySnapshot.docs
+      .map((e) => AudioModel.fromJson(e.data() as Map<String, dynamic>))
+      .toList();
+  return listAudio;
+}
+
 String allAudioTime(totalDurationFromAudioModel) {
   final seconds = totalDurationFromAudioModel.fold(0, (value, element) {
     final singleTime = element.split(':');
@@ -39,8 +54,7 @@ String allAudioTime(totalDurationFromAudioModel) {
   final int h = seconds ~/ 3600, m = ((seconds - h * 3600)) ~/ 60;
   final hourLeft = h.toString().length < 2 ? "0$h" : h.toString();
 
-  final minuteLeft =
-      m.toString().length < 2 ? "0$m" : m.toString();
+  final minuteLeft = m.toString().length < 2 ? "0$m" : m.toString();
   if (h == 0) {
     return '$hourLeft:$minuteLeft минут';
   } else {

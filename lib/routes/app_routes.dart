@@ -14,6 +14,7 @@ import 'package:memory_box/pages/registration_pages/splash_authorization_page.da
 import 'package:memory_box/pages/registration_pages/splash_registation_page.dart';
 import 'package:memory_box/pages/save_record_page/save_record_page.dart';
 import 'package:memory_box/pages/save_to_collection_page/save_to_collection_page.dart';
+import 'package:memory_box/pages/search_page/search_page.dart';
 import 'package:memory_box/pages/splash_page/splash_page.dart';
 
 class AppRouter {
@@ -28,6 +29,9 @@ class AppRouter {
     switch (settings.name) {
       case HelloNewUserPage.routeName:
         builder = (_) => const HelloNewUserPage();
+        break;
+      case SearchPage.routeName:
+        builder = (_) => const SearchPage();
         break;
 
       case HomePage.routeName:
