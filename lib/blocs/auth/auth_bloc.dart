@@ -1,53 +1,23 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:memory_box/repository/auth_repository.dart';
-import 'package:memory_box/utils/helpers.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   late final String verifyId;
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-
-  String? pathToAvatar;
-  String? userName;
-
-  Future pickImage() async {
-    final picker = ImagePicker();
-    File imageFile;
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    imageFile = File(pickedFile!.path);
-    final path = await _uploadImage(imageFile);
-    return path;
-  }
-
-  Future<String> _uploadImage(File image) async {
-    final nameImage = generateRandomString();
-    final ref = _storage.ref().child(
-        'image-${FirebaseAuth.instance.currentUser!.uid}/$nameImage.jpg');
-    final uploadTask =
-        ref.putFile(image, SettableMetadata(contentType: 'image/jpg'));
-    final snapshot = await uploadTask.whenComplete(() {});
-    final urlFirestore = await snapshot.ref.getDownloadURL();
-    return urlFirestore;
-  }
+  final AuthRepository _authRepository = AuthRepository();
 
   AuthBloc() : super(AuthState()) {
     on<AuthPhoneEvent>((event, emit) async {
-      await _auth.verifyPhoneNumber(
+      await _authRepository.auth.verifyPhoneNumber(
         verificationCompleted: (credential) async {
-          await _auth
+          await _authRepository.auth
               .signInWithCredential(credential)
-              .then((value) => log('u log in'));
+              .then((value) => log('LogIn'));
         },
         verificationFailed: (exception) => log('${exception.message}'),
         codeSent: (verificationId, resendToken) => verifyId = verificationId,
@@ -65,10 +35,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         verificationId: verifyId,
         smsCode: event.smsCode,
       );
-      if (_auth.currentUser == null) {
-        await _auth.signInWithCredential(credential);
+      if (_authRepository.auth.currentUser == null) {
+        await _authRepository.auth.signInWithCredential(credential);
       } else {
-        await _auth.currentUser?.updatePhoneNumber(credential);
+        await _authRepository.auth.currentUser?.updatePhoneNumber(credential);
       }
       emit(state.copyWith(
         status: AuthStatus.verified,
@@ -78,14 +48,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(state.copyWith(userName: event.userName));
     });
     on<UserAvatarEvent>((event, emit) async {
-      final pathToAvatar = await pickImage();
+      final pathToAvatar = await _authRepository.pickImage();
       emit(state.copyWith(pathToAvatar: pathToAvatar));
     });
     on<UserInfoSaveEvent>((event, emit) async {
       if (state.userName != null) {
-        await AuthRepo.instance.users?.updateDisplayName(state.userName);
+        await _authRepository.users?.updateDisplayName(state.userName);
       } else {
-        await AuthRepo.instance.users?.updatePhotoURL(state.pathToAvatar);
+        await _authRepository.users?.updatePhotoURL(state.pathToAvatar);
       }
     });
     on<UpdatePhoneEvent>((event, emit) async {});
