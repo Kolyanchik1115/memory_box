@@ -32,17 +32,6 @@ class ProfileEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (kDebugMode) {
-    //   print(maskPhoneFormatter.getUnmaskedText().isEmpty);
-    // }
-    // void onTap() {
-    //   context.read<AuthBloc>().add(
-    //         AuthSmsEvent(
-    //           smsCode: maskSmsFormatter.getUnmaskedText(),
-    //         ),
-    //       );
-    // }
-
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return BlocProvider(

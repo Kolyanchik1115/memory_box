@@ -16,6 +16,7 @@ import 'package:memory_box/pages/save_record_page/save_record_page.dart';
 import 'package:memory_box/pages/save_to_collection_page/save_to_collection_page.dart';
 import 'package:memory_box/pages/search_page/search_page.dart';
 import 'package:memory_box/pages/splash_page/splash_page.dart';
+import 'package:memory_box/pages/subscribe_page/subscribe_page.dart';
 
 class AppRouter {
   const AppRouter._();
@@ -74,6 +75,9 @@ class AppRouter {
         break;
       case AudioRecordingsPage.routeName:
         builder = (_) => const AudioRecordingsPage();
+        break;
+      case SubscribePage.routeName:
+        builder = (_) => const SubscribePage();
         break;
 
       case SplashScreen.routeName:
