@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:memory_box/blocs/player/player_bloc.dart';
 import 'package:memory_box/pages/home_page/home_page.dart';
 
@@ -11,7 +10,6 @@ import 'package:memory_box/resources/app_images.dart';
 import 'package:memory_box/resources/app_text_styles.dart';
 import 'package:memory_box/widgets/new_user_containers.dart/player_widget.dart';
 import 'package:share_plus/share_plus.dart';
-
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SaveToCollectionContainer extends StatefulWidget {

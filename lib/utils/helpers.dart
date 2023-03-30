@@ -5,10 +5,13 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:memory_box/models/audio_model.dart';
+import 'package:memory_box/models/collection_model.dart';
 import 'package:memory_box/pages/splash_page/splash_page.dart';
 import 'package:memory_box/resources/app_colors.dart';
 import 'package:memory_box/resources/app_text_styles.dart';
+import 'package:uuid/uuid.dart';
 
 bool isAuth() {
   return FirebaseAuth.instance.currentUser == null;
@@ -77,11 +80,41 @@ class TimerFormat {
   }
 }
 
-class AudioId {
-  static String? audioId;
-  static String? collectionId;
-  static int? audioInSeconds;
-  static List audioIdList = [];
+String totalDurationSeconds(totalDuradion) {
+  final int h = totalDuradion ~/ 3600, m = ((totalDuradion - h * 3600)) ~/ 60;
+  final hourLeft = h.toString().length < 2 ? "0$h" : h.toString();
+
+  final minuteLeft = m.toString().length < 2 ? "0$m" : m.toString();
+  if (h == 0) {
+    return '$hourLeft:$minuteLeft минут';
+  } else {
+    return '$hourLeft:$minuteLeft часов';
+  }
+}
+
+String getId() {
+  const uuid = Uuid();
+  return uuid.v4();
+}
+
+String dateNow() {
+  final dateTimeNow = DateTime.now();
+  final dateFormat = DateFormat('dd.MM.yy');
+  final dateNow = dateFormat.format(dateTimeNow);
+  return dateNow;
+}
+
+Future<List<CollectionAudioModel>> getListCollectionHelper() async {
+  final sort = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection('collectionList');
+  final QuerySnapshot querySnapshot = await sort.get();
+  final collectionList = querySnapshot.docs
+      .map((e) =>
+          CollectionAudioModel.fromJson(e.data() as Map<String, dynamic>))
+      .toList();
+  return collectionList;
 }
 
 String generateRandomString() {
@@ -91,6 +124,13 @@ String generateRandomString() {
   final randomString =
       List.generate(5, (index) => _chars[random.nextInt(_chars.length)]).join();
   return randomString;
+}
+
+class AudioId {
+  static String? audioId;
+  static String? collectionId;
+  static int? audioInSeconds;
+  static List audioIdList = [];
 }
 
 Future<void> showDialogAcc(context) async {

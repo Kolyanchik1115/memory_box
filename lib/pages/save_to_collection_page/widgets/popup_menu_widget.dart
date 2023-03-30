@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:memory_box/resources/app_colors.dart';
@@ -14,8 +15,7 @@ class PopupMenuWidget extends StatelessWidget {
     return PopupMenuButton(
       offset: const Offset(0, 35),
       color: AppColors.white,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       icon: SvgPicture.asset(AppIcons.tripleMenu),
       itemBuilder: (context) => [
         PopupMenuItem(
@@ -38,11 +38,9 @@ class PopupMenuWidget extends StatelessWidget {
         ),
         PopupMenuItem(
           child: TextButton(
-            onPressed: () async {
-              await Share.shareXFiles([
-                XFile(
-                    '/data/user/0/com.example.memory_box/cache/Аудиозапись.mp4')
-              ], text: 'Моя новая  сказка!');
+              onPressed: () async {
+                await Share.shareXFiles([XFile('/data/user/0/com.example.memory_box/cache/Аудиозапись.mp4')],
+                    text: 'Моя новая  сказка!');
             },
             child: Text(
               'Поделиться',

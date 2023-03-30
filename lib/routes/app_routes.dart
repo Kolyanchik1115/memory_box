@@ -1,7 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:memory_box/pages/audio_recording_page/audio_recording_page.dart';
+import 'package:memory_box/pages/collection_page/collection_card_page/collection_card_page.dart';
+import 'package:memory_box/pages/collection_page/collection_card_page/collection_management_page.dart';
+import 'package:memory_box/pages/collection_page/create_new_collection_page/create_new_collection_page.dart';
+import 'package:memory_box/pages/collection_page/main_collection_page/collection_page.dart';
+import 'package:memory_box/pages/collection_page/select_audio_page/select_audio_page.dart';
 import 'package:memory_box/pages/deleted_page/deleted_page.dart';
+import 'package:memory_box/pages/deleted_page/select_to_delete_page.dart';
 import 'package:memory_box/pages/home_page/home_page.dart';
 import 'package:memory_box/pages/main_page.dart';
 import 'package:memory_box/pages/profile_pages/profile_edit_page/profile_edit_page.dart';
@@ -15,6 +21,7 @@ import 'package:memory_box/pages/registration_pages/splash_registation_page.dart
 import 'package:memory_box/pages/save_record_page/save_record_page.dart';
 import 'package:memory_box/pages/save_to_collection_page/save_to_collection_page.dart';
 import 'package:memory_box/pages/search_page/search_page.dart';
+import 'package:memory_box/pages/select_audio_to_collection/select_audio_to_collection.dart';
 import 'package:memory_box/pages/splash_page/splash_page.dart';
 import 'package:memory_box/pages/subscribe_page/subscribe_page.dart';
 
@@ -82,6 +89,29 @@ class AppRouter {
 
       case SplashScreen.routeName:
         builder = (_) => const SplashScreen();
+        break;
+
+      case SelectToDeletePage.routeName:
+        builder = (_) => const SelectToDeletePage();
+        break;
+      case CollectionCardPage.routeName:
+        builder = (_) => const CollectionCardPage();
+        break;
+      case CollectionManagementPage.routeName:
+        builder = (_) => const CollectionManagementPage();
+        break;
+
+      case CollectionPage.routeName:
+        builder = (_) => const CollectionPage();
+        break;
+      case CreateNewCollectionPage.routeName:
+        builder = (_) => const CreateNewCollectionPage();
+        break;
+      case SaveAudioToCollection.routeName:
+        builder = (_) => const SaveAudioToCollection();
+        break;
+      case SelectAudioPage.routeName:
+        builder = (_) => SelectAudioPage();
         break;
 
       default:

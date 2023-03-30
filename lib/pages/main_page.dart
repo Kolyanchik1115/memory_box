@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memory_box/blocs/audio_list/audio_list_bloc.dart';
+import 'package:memory_box/blocs/collection/collection_bloc.dart';
+import 'package:memory_box/blocs/create_collection_bloc/create_collection_bloc.dart';
 import 'package:memory_box/blocs/navigation/navigation_bloc.dart';
 import 'package:memory_box/blocs/player/player_bloc.dart';
 import 'package:memory_box/blocs/subscribe/subscribe_bloc.dart';
 import 'package:memory_box/pages/audio_recording_page/audio_recording_page.dart';
+import 'package:memory_box/pages/collection_page/main_collection_page/collection_page.dart';
 import 'package:memory_box/pages/deleted_page/deleted_page.dart';
 import 'package:memory_box/pages/deleted_page/select_to_delete_page.dart';
 import 'package:memory_box/pages/home_page/home_page.dart';
@@ -29,14 +32,15 @@ class MainPage extends StatelessWidget {
 
   static const List<String> _pages = [
     HomePage.routeName,
-    ProfilePage.routeName,
+    CollectionPage.routeName,
     RecordPage.routeName,
     AudioRecordingsPage.routeName,
-    DeletedPage.routeName,
-    SelectToDeletePage.routeName,
+    ProfilePage.routeName,
     SearchPage.routeName,
+    DeletedPage.routeName,
     SubscribePage.routeName,
-    // CollectionPage.routeName,
+    SelectToDeletePage.routeName,
+    DeletedPage.routeName,
   ];
 
   void _onSelectTab(String route) {
@@ -68,23 +72,22 @@ class MainPage extends StatelessWidget {
               AudioListInitialEvent(),
             ),
         ),
-
         BlocProvider(
           create: (context) => NavigationBloc(),
         ),
         BlocProvider(
           create: (context) => SubscribeBloc(),
         ),
-        // BlocProvider(
-        //   create: (context) => CollectionBloc()..add(InitCollectionCardEvent()),
-        // ),
+        BlocProvider(
+          create: (context) => CollectionBloc()..add(InitCollectionCardEvent()),
+        ),
         BlocProvider(
           create: (context) => PlayerBloc()..add(PlayerInitEvent()),
         ),
-        // BlocProvider(
-        //   create: (context) =>
-        //       CreateCollectionBloc()..add(CollectionInitialEvent()),
-        // ),
+        BlocProvider(
+          create: (context) =>
+              CreateCollectionBloc()..add(CollectionInitialEvent()),
+        ),
       ],
       child: BlocConsumer<NavigationBloc, NavigationState>(
         listener: (context, state) async {
