@@ -164,7 +164,8 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
         .doc(id)
         .update({
       'idAudioModels': FieldValue.arrayUnion([AudioId.audioId]),
-      'allTimeAudioCollection': FieldValue.increment(AudioId.audioInSeconds!),
+      'allTimeAudioCollection':
+          FieldValue.increment(AudioId.audioInSeconds ?? 0),
     });
   }
 

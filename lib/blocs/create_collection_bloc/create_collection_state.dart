@@ -1,11 +1,11 @@
 part of 'create_collection_bloc.dart';
 
 @immutable
-class CreateCollectionState  {
-  const CreateCollectionState( {
+class CreateCollectionState {
+  const CreateCollectionState({
     this.audioModel,
     this.id = '',
-    this.titleOfCollection = 'Название',
+    this.titleOfCollection = '',
     this.image = '',
     this.descriptionOfAudio = '',
     this.createTime = '',
@@ -45,13 +45,14 @@ class CreateCollectionState  {
     AudioModel? audioModel,
   }) {
     return CreateCollectionState(
-      audioModel: audioModel ??  this.audioModel,
+      audioModel: audioModel ?? this.audioModel,
       id: id ?? this.id,
       titleOfCollection: titleOfCollection ?? this.titleOfCollection,
       image: image ?? this.image,
       descriptionOfAudio: descriptionOfAudio ?? this.descriptionOfAudio,
       createTime: createTime ?? this.createTime,
-      allTimeAudioCollection: allTimeAudioCollection ?? this.allTimeAudioCollection,
+      allTimeAudioCollection:
+          allTimeAudioCollection ?? this.allTimeAudioCollection,
       idAudioModels: idAudioModels ?? this.idAudioModels,
       collectionAudioModel: collectionAudioModel ?? this.collectionAudioModel,
       audioModels: audioModels ?? this.audioModels,
@@ -59,6 +60,4 @@ class CreateCollectionState  {
       ids: ids ?? this.ids,
     );
   }
-
-
 }
